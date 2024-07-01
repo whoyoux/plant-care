@@ -1,10 +1,10 @@
 "server-only";
 
 import { openai } from "@ai-sdk/openai";
-import { generateObject, generateText } from "ai";
+import { generateObject } from "ai";
 import { z } from "zod";
 
-export const findPlant = async () => {
+export const findPlant = async (imageUrl: string) => {
 	console.log("start finding plant");
 	const { object, usage } = await generateObject({
 		model: openai("gpt-4o"),
@@ -25,10 +25,7 @@ export const findPlant = async () => {
 					},
 					{
 						type: "image",
-						image: new URL(
-							"https://malaszklarnia.pl/wp-content/uploads/2023/05/aloes-drzewiasty-aloe-arborescens.jpg",
-							// "https://utfs.io/f/c25c4aca-3e86-423f-a00f-39d7d91d37d9-rhhqyj.png",
-						),
+						image: new URL(imageUrl),
 					},
 				],
 			},
