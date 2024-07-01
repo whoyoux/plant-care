@@ -26,6 +26,7 @@ export default function Home() {
 						src={heroImg}
 						alt="A small plant in a pot"
 						className="max-w-[300px] h-auto"
+						placeholder="blur"
 					/>
 				</div>
 			</section>
@@ -63,7 +64,12 @@ export default function Home() {
 							</p>
 						</div>
 					</div>
-					<Image src={heroImg} alt="" className="max-w-[250px] h-auto" />
+					<Image
+						src={heroImg}
+						alt=""
+						className="max-w-[250px] h-auto"
+						placeholder="blur"
+					/>
 				</div>
 			</section>
 			<section className="py-20 px-8 space-y-12">
