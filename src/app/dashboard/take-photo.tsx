@@ -5,16 +5,43 @@ import { useRef, useState } from "react";
 
 import { Camera, type CameraType } from "react-camera-pro";
 import { toast } from "sonner";
+import { uploadPhotoAndIdentifyPlantAction } from "./actions";
+
+const base64ToFile = async (base64: string, filename: string) => {
+	const response = await fetch(base64);
+	const blob = await response.blob();
+	return new File([blob], filename);
+};
 
 const TakePhoto = () => {
+	const [isPending, setIsPending] = useState(false);
 	const [numberOfCameras, setNumberOfCameras] = useState(0);
 	const cameraRef = useRef<CameraType>(null);
-	const takePhoto = () => {
+
+	const takePhoto = async () => {
+		setIsPending(true);
 		const photo = cameraRef.current?.takePhoto?.();
 		if (!photo) {
 			toast.error("No photo taken. Please try again.");
+			setIsPending(false);
+			return;
 		}
-		console.log(photo);
+
+		const photoFile = await base64ToFile(photo.toString(), "photo.jpg");
+
+		const fd = new FormData();
+		fd.append("photo", photoFile);
+
+		const result = await uploadPhotoAndIdentifyPlantAction(fd);
+
+		if (result?.validationErrors) {
+			toast.error(result.validationErrors.photo?._errors);
+		} else if (result?.serverError) {
+			toast.error(`Server error: ${result.serverError}`);
+		} else if (result?.data?.success) {
+			toast.success("Photo uploaded successfully!");
+		}
+		setIsPending(false);
 	};
 	const flipCamera = () => {
 		cameraRef.current?.switchCamera();
