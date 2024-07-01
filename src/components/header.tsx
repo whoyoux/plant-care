@@ -6,6 +6,7 @@ import { Button, buttonVariants } from "./ui/button";
 import {
 	Sheet,
 	SheetContent,
+	SheetDescription,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
@@ -94,12 +95,13 @@ const MobileNav = ({ className, user }: MobileNavProps) => {
 			</SheetTrigger>
 			<SheetContent>
 				<SheetHeader>
-					<SheetTitle>
-						<h1 className="text-lg text-primary font-semibold flex items-center gap-2">
-							<Leaf />
-							PlantCare
-						</h1>
+					<SheetTitle className="text-lg text-primary font-semibold flex items-center gap-2">
+						<Leaf />
+						PlantCare
 					</SheetTitle>
+					<SheetDescription className="text-left">
+						Identify and Care for Your Plants
+					</SheetDescription>
 				</SheetHeader>
 				<nav className="flex flex-col gap-4 items-center pt-10">
 					{LINKS.map((link) => (
@@ -169,14 +171,27 @@ const MobileUser = ({ user }: UserProps) => {
 		return (
 			<div className="w-full flex flex-col gap-4 pt-8	">
 				<span className="text-center font-semibold">{user.name}</span>
-				<Button variant="secondary">Dashboard</Button>
-				<Button variant="secondary">
+				<Link
+					href="/dashboard"
+					className={cn(buttonVariants({ variant: "secondary" }))}
+				>
+					Dashboard
+				</Link>
+				<Link
+					href="/balance"
+					className={cn(buttonVariants({ variant: "secondary" }))}
+				>
 					My balance:{" "}
 					<span className="font-semibold text-primary pl-1">
 						{user.balance}
 					</span>
-				</Button>
-				<Button variant="secondary">Settings</Button>
+				</Link>
+				<Link
+					href="/settings"
+					className={cn(buttonVariants({ variant: "secondary" }))}
+				>
+					Settings
+				</Link>
 				<form action={logout} className="w-full">
 					<Button type="submit" variant="destructive" className="w-full">
 						Sign Out
