@@ -1,4 +1,5 @@
 import heroImg from "@/assets/hero.png";
+import plantInPot from "@/assets/plant-in-pot.png";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -27,6 +28,8 @@ export default function Home() {
 						alt="A small plant in a pot"
 						className="max-w-[300px] h-auto"
 						placeholder="blur"
+						width={300}
+						height={300}
 					/>
 				</div>
 			</section>
@@ -65,10 +68,12 @@ export default function Home() {
 						</div>
 					</div>
 					<Image
-						src={heroImg}
+						src={plantInPot}
 						alt=""
 						className="max-w-[250px] h-auto"
 						placeholder="blur"
+						width={250}
+						height={250}
 					/>
 				</div>
 			</section>
@@ -87,6 +92,7 @@ export default function Home() {
 						alt="Screenshot of app"
 						width={600}
 						height={300}
+						quality={50}
 						className="object-cover w-full aspect-video rounded-lg"
 					/>
 					<Image
@@ -94,6 +100,7 @@ export default function Home() {
 						alt="Screenshot of app"
 						width={600}
 						height={300}
+						quality={50}
 						className="object-cover w-full aspect-video rounded-lg"
 					/>
 				</div>
