@@ -16,17 +16,19 @@ const base64ToFile = async (base64: string, filename: string) => {
 const TakePhoto = () => {
 	const [isPending, setIsPending] = useState(false);
 	const [numberOfCameras, setNumberOfCameras] = useState(0);
+	const [photo, setPhoto] = useState<string | null>(null);
 	const cameraRef = useRef<CameraType>(null);
 
 	const takePhoto = async () => {
 		setIsPending(true);
 		const photo = cameraRef.current?.takePhoto?.();
+
 		if (!photo) {
 			toast.error("No photo taken. Please try again.");
 			setIsPending(false);
 			return;
 		}
-
+		setPhoto(photo.toString());
 		const photoFile = await base64ToFile(photo.toString(), "photo.jpg");
 
 		const fd = new FormData();
@@ -38,9 +40,12 @@ const TakePhoto = () => {
 			toast.error(result.validationErrors.photo?._errors);
 		} else if (result?.serverError) {
 			toast.error(`Server error: ${result.serverError}`);
+		} else if (!result?.data?.success) {
+			toast.error(`${result?.data?.message}`);
 		} else if (result?.data?.success) {
 			toast.success("Photo uploaded successfully!");
 		}
+		setPhoto(null);
 		setIsPending(false);
 	};
 	const flipCamera = () => {
@@ -50,7 +55,8 @@ const TakePhoto = () => {
 		<section className="flex flex-col gap-4">
 			<h1 className="text-center text-2xl font-bold">What plant is that?</h1>
 			<div className="aspect-square bg-muted flex items-center justify-center w-full relative border">
-				<CameraOffIcon className="absolute z-0" />
+				<CameraOffIcon className="absolute -z-10" />
+				{photo && <img src={photo} alt="plant" />}
 				<Camera
 					ref={cameraRef}
 					aspectRatio={1}
@@ -67,8 +73,8 @@ const TakePhoto = () => {
 				/>
 			</div>
 			<div className="flex gap-2">
-				<Button onClick={takePhoto} className="flex-1">
-					Take a photo
+				<Button onClick={takePhoto} className="flex-1" disabled={isPending}>
+					{isPending ? "Processing..." : "Take a photo"}
 				</Button>
 				{numberOfCameras > 1 && (
 					<Button size="icon" variant="secondary" onClick={flipCamera}>

@@ -141,6 +141,9 @@ const DesktopUser = ({ user }: UserProps) => {
 					<Link href="/dashboard">
 						<DropdownMenuItem>Dashboard</DropdownMenuItem>
 					</Link>
+					<Link href="/plants">
+						<DropdownMenuItem>My plants</DropdownMenuItem>
+					</Link>
 					<DropdownMenuItem>
 						My balance:
 						<span className="font-semibold text-primary pl-1">
@@ -176,6 +179,12 @@ const MobileUser = ({ user }: UserProps) => {
 					className={cn(buttonVariants({ variant: "secondary" }))}
 				>
 					Dashboard
+				</Link>
+				<Link
+					href="/plants"
+					className={cn(buttonVariants({ variant: "secondary" }))}
+				>
+					My plants
 				</Link>
 				<Link
 					href="/balance"

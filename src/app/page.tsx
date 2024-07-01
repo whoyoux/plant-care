@@ -1,11 +1,14 @@
 import heroImg from "@/assets/hero.png";
 import plantInPot from "@/assets/plant-in-pot.png";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { auth, signIn } from "@/lib/auth";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { findPlantAction } from "./actions";
+import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+	const session = await auth();
 	return (
 		<main>
 			<section className="flex flex-col-reverse md:flex-row gap-8 items-center px-8 md:px-12 py-44 w-full md:justify-between max-w-screen-2xl mx-auto">
@@ -18,9 +21,25 @@ export default function Home() {
 						your garden or on your hikes. Just snap a photo and let our AI do
 						the rest.
 					</p>
-					<form action={findPlantAction}>
-						<Button type="submit">Upload Photo</Button>
-					</form>
+					<div>
+						{session?.user ? (
+							<Link
+								href="/dashboard"
+								className={cn(buttonVariants({ variant: "default" }))}
+							>
+								Get started
+							</Link>
+						) : (
+							<form
+								action={async () => {
+									"use server";
+									await signIn("google");
+								}}
+							>
+								<Button type="submit">Sign in</Button>
+							</form>
+						)}
+					</div>
 				</div>
 				<div>
 					<Image

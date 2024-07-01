@@ -1,5 +1,6 @@
 import Divider from "@/components/divider";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import TakePhoto from "./take-photo";
 import UploadPhoto from "./upload-photo";
