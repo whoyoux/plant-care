@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import TakePhoto from "./take-photo";
 import UploadPhoto from "./upload-photo";
 
-export const maxDuration = 120;
+export const maxDuration = 60;
 
 const DashoboardPage = async () => {
 	const session = await auth();
