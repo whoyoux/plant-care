@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { authAction } from "@/lib/safe-action";
 import { findPlant } from "@/services/ai";
 import { uploadImage } from "@/services/storage";
+import { revalidatePath } from "next/cache";
 import { zfd } from "zod-form-data";
 
 const schema = zfd.formData({
@@ -60,11 +61,12 @@ export const uploadPhotoAndIdentifyPlantAction = authAction
 
 				const aiResult = await findPlant(uploadResult.url);
 
-				await tx.imageResult.create({
+				const imgResult = await tx.imageResult.create({
 					data: {
 						isFound: aiResult.isFound,
 						name: aiResult.name,
 						description: aiResult.description,
+						scientificName: aiResult.scientificName,
 						carePlan: aiResult.carePlan,
 						errorMessage: aiResult.errorMessage,
 						user: {
@@ -93,11 +95,14 @@ export const uploadPhotoAndIdentifyPlantAction = authAction
 
 				return {
 					success: true,
+					plantId: imgResult.id,
 					message: "Successfully uploaded and identified the plant!",
 				};
 			},
 			{ timeout: 32000 },
 		);
+
+		revalidatePath("/plants");
 
 		return tx;
 	});

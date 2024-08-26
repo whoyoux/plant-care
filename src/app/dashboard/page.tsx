@@ -12,7 +12,7 @@ const DashoboardPage = async () => {
 	if (!session?.user) return notFound();
 
 	return (
-		<main className="min-h-[calc(100vh-208px)]">
+		<main className="">
 			<div className="max-w-[600px] mx-auto flex flex-col gap-4 px-8">
 				<TakePhoto />
 				<Divider text="OR" />

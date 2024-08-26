@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { uploadPhotoAndIdentifyPlantAction } from "./actions";
+import { useRouter } from "next/navigation";
 
 const UploadPhoto = () => {
+	const router = useRouter();
 	const [isPending, setIsPending] = useState(false);
 	const [photo, setPhoto] = React.useState<File | null>(null);
 
@@ -44,6 +46,7 @@ const UploadPhoto = () => {
 			toast.error(`${result?.data?.message}`);
 		} else if (result?.data?.success) {
 			toast.success("Photo uploaded successfully!");
+			router.push(`/plants/${result.data.plantId}`);
 		}
 	};
 

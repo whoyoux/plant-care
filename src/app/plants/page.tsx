@@ -28,7 +28,6 @@ const PlantsPage = async () => {
 			createdAt: "desc",
 		},
 	});
-	console.log(plants);
 
 	return (
 		<div className="min-h-[calc(100vh-208px)]">
@@ -52,6 +51,7 @@ const PlantCard = ({
 	isFound,
 	name,
 	description,
+	scientificName,
 	errorMessage,
 	imageFile,
 	id,
@@ -70,6 +70,9 @@ const PlantCard = ({
 						{isFound ? name : "Plant not recognized"}
 					</h2>
 				</Link>
+				<h3 className="text-lg font-medium text-muted-foreground">
+					{scientificName}
+				</h3>
 				<p className="text-sm text-muted-foreground">
 					{isFound ? description : errorMessage}
 				</p>

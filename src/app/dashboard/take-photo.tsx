@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { Camera, type CameraType } from "react-camera-pro";
 import { toast } from "sonner";
 import { uploadPhotoAndIdentifyPlantAction } from "./actions";
+import { useRouter } from "next/navigation";
 
 const base64ToFile = async (base64: string, filename: string) => {
 	const response = await fetch(base64);
@@ -14,6 +15,7 @@ const base64ToFile = async (base64: string, filename: string) => {
 };
 
 const TakePhoto = () => {
+	const router = useRouter();
 	const [isPending, setIsPending] = useState(false);
 	const [numberOfCameras, setNumberOfCameras] = useState(0);
 	const [photo, setPhoto] = useState<string | null>(null);
@@ -44,6 +46,7 @@ const TakePhoto = () => {
 			toast.error(`${result?.data?.message}`);
 		} else if (result?.data?.success) {
 			toast.success("Photo uploaded successfully!");
+			router.push(`/plants/${result.data.plantId}`);
 		}
 		setPhoto(null);
 		setIsPending(false);

@@ -55,12 +55,12 @@ export default function RootLayout({
 		<html lang="en" className="dark">
 			<body
 				className={cn(
-					"min-h-screen bg-background font-sans antialiased",
+					"min-h-[100dvh] bg-background font-sans antialiased flex flex-col",
 					fontSans.variable,
 				)}
 			>
 				<Header />
-				{children}
+				<main className="flex-grow">{children}</main>
 				<Footer />
 				<Toaster richColors />
 			</body>

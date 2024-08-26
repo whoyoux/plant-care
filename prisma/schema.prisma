@@ -66,12 +66,13 @@ model ImageFile {
 }
 
 model ImageResult {
-  id           String   @id @default(cuid())
-  isFound      Boolean  @map("is_found")
-  name         String
-  description  String
-  carePlan     String[] @map("care_plan")
-  errorMessage String?  @map("error_message")
+  id             String   @id @default(cuid())
+  isFound        Boolean  @map("is_found")
+  name           String
+  scientificName String   @default(" ") @map("scientific_name")
+  description    String
+  carePlan       String[] @map("care_plan")
+  errorMessage   String?  @map("error_message")
 
   imageFile   ImageFile @relation(fields: [imageFileId], references: [id])
   imageFileId String    @unique
