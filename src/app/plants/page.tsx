@@ -32,7 +32,16 @@ const PlantsPage = async () => {
 	return (
 		<div className="min-h-[calc(100vh-208px)]">
 			<div className="mx-auto px-8 flex flex-col gap-8 max-w-screen-lg">
-				<h2 className="text-xl font-semibold">My plants</h2>
+				<div className="flex justify-between items-center">
+					<h2 className="text-xl font-semibold">My plants</h2>
+					<Link
+						href="/dashboard"
+						className={cn(buttonVariants({ variant: "link" }))}
+					>
+						<ArrowLeft className="w-4 h-4 mr-2" />
+						Go back to dashboard
+					</Link>
+				</div>
 				<div className="flex flex-col gap-8">
 					{plants.map((plant) => (
 						<PlantCard key={plant.id} {...plant} />
@@ -46,6 +55,8 @@ const PlantsPage = async () => {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 const PlantCard = ({
 	isFound,

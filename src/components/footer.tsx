@@ -8,22 +8,16 @@ const Footer = () => {
 			<h5 className="text-primary self-start md:self-auto">PlantCare</h5>
 			<nav className="flex flex-col md:flex-row items-center">
 				<Link
-					href="/features"
+					href="/#features"
 					className={cn(buttonVariants({ variant: "link" }), "text-xs")}
 				>
 					Features
 				</Link>
 				<Link
-					href="/features"
+					href="/#features"
 					className={cn(buttonVariants({ variant: "link" }), "text-xs")}
 				>
-					Screenshots
-				</Link>
-				<Link
-					href="/features"
-					className={cn(buttonVariants({ variant: "link" }), "text-xs")}
-				>
-					About
+					Features
 				</Link>
 				<Link
 					href="/features"

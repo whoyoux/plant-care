@@ -27,20 +27,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const LINKS = [
 	{
-		href: "/features",
+		href: "/#features",
 		label: "Features",
 	},
 	{
-		href: "/screenshots",
-		label: "Screenshots",
-	},
-	{
-		href: "/about",
-		label: "About",
-	},
-	{
-		href: "/contact",
-		label: "Contact",
+		href: "/credits",
+		label: "Buy credits",
 	},
 ];
 
@@ -99,9 +91,9 @@ const MobileNav = ({ className, user }: MobileNavProps) => {
 						<Leaf />
 						PlantCare
 					</SheetTitle>
-					<SheetDescription className="text-left">
+					{/* <SheetDescription className="text-left">
 						Identify and Care for Your Plants
-					</SheetDescription>
+					</SheetDescription> */}
 				</SheetHeader>
 				<nav className="flex flex-col gap-4 items-center pt-10">
 					{LINKS.map((link) => (
@@ -172,21 +164,26 @@ const MobileUser = ({ user }: UserProps) => {
 	};
 	if (user) {
 		return (
-			<div className="w-full flex flex-col gap-4 pt-8	">
-				<span className="text-center font-semibold">{user.name}</span>
+			<div className="w-full flex flex-col gap-4">
 				<Link
 					href="/dashboard"
-					className={cn(buttonVariants({ variant: "secondary" }))}
+					className={cn(buttonVariants({ variant: "link" }))}
 				>
 					Dashboard
 				</Link>
 				<Link
 					href="/plants"
-					className={cn(buttonVariants({ variant: "secondary" }))}
+					className={cn(buttonVariants({ variant: "link" }))}
 				>
 					My plants
 				</Link>
-				<Link
+				{/* <Link
+					href="/plants"
+					className={cn(buttonVariants({ variant: "secondary" }))}
+				>
+					My plants
+				</Link> */}
+				{/* <Link
 					href="/balance"
 					className={cn(buttonVariants({ variant: "secondary" }))}
 				>
@@ -194,13 +191,13 @@ const MobileUser = ({ user }: UserProps) => {
 					<span className="font-semibold text-primary pl-1">
 						{user.balance}
 					</span>
-				</Link>
-				<Link
+				</Link> */}
+				{/* <Link
 					href="/settings"
 					className={cn(buttonVariants({ variant: "secondary" }))}
 				>
 					Settings
-				</Link>
+				</Link> */}
 				<form action={logout} className="w-full">
 					<Button type="submit" variant="destructive" className="w-full">
 						Sign Out
@@ -231,10 +228,13 @@ const SignInButton = () => {
 		<form
 			action={async () => {
 				"use server";
-				await signIn("google");
+				await signIn("google", {
+					redirectTo: "/dashboard",
+				});
 			}}
+			className="w-full"
 		>
-			<Button size="sm" variant="default">
+			<Button size="sm" className="w-full" variant="default">
 				Sign in
 			</Button>
 		</form>

@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { uploadPhotoAndIdentifyPlantAction } from "./actions";
 import { useRouter } from "next/navigation";
 
+const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
+
 const UploadPhoto = () => {
 	const router = useRouter();
 	const [isPending, setIsPending] = useState(false);
@@ -17,7 +19,7 @@ const UploadPhoto = () => {
 			return;
 		}
 
-		if (photo.size > 1024 * 1024 * 5) {
+		if (photo.size > MAX_FILE_SIZE) {
 			toast.error(
 				"The file size is too large. Please select a file smaller than 5MB.",
 			);
@@ -59,8 +61,12 @@ const UploadPhoto = () => {
 				accept="image/*"
 				onChange={(e) => setPhoto(e.target.files?.[0] ?? null)}
 			/>
-			<Button variant="secondary" onClick={processPhoto} disabled={isPending}>
-				{isPending ? "Processing..." : "Upload"}
+			<Button
+				variant="secondary"
+				onClick={processPhoto}
+				disabled={isPending || !photo}
+			>
+				{isPending ? "Processing..." : "Identify plant (costs 1 credit)"}
 			</Button>
 		</section>
 	);

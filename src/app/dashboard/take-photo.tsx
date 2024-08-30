@@ -77,7 +77,7 @@ const TakePhoto = () => {
 			</div>
 			<div className="flex gap-2">
 				<Button onClick={takePhoto} className="flex-1" disabled={isPending}>
-					{isPending ? "Processing..." : "Take a photo"}
+					{isPending ? "Processing..." : "Identify plant (costs 1 credit)"}
 				</Button>
 				{numberOfCameras > 1 && (
 					<Button size="icon" variant="secondary" onClick={flipCamera}>

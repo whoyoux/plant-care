@@ -52,7 +52,7 @@ export default async function Home() {
 					/>
 				</div>
 			</section>
-			<section className="bg-card py-20 px-8 space-y-12">
+			<section className="bg-card py-20 px-8 space-y-12" id="features">
 				<div className="flex flex-col items-center max-w-screen-md mx-auto gap-4">
 					<Badge>Key Features</Badge>
 					<h2 className="text-2xl font-bold">Powerful Plant Recognition</h2>

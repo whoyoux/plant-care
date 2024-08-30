@@ -34,6 +34,33 @@ model Account {
   @@id([provider, providerAccountId])
 }
 
+enum PLANS {
+  BASIC
+  MEDIUM
+  PRO
+}
+
+model Order {
+  id   String @id @default(cuid())
+  plan PLANS
+
+  paid   Boolean   @default(false)
+  paidAt DateTime? @map("paid_at")
+
+  expired   Boolean   @default(false)
+  expiresAt DateTime? @map("expires_at")
+
+  cancelled   Boolean   @default(false)
+  cancelledAt DateTime? @map("cancelled_at")
+  cancelledBy String?   @map("cancelled_by")
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -46,6 +73,7 @@ model User {
 
   imageFiles   ImageFile[]
   imageResults ImageResult[]
+  orders       Order[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
