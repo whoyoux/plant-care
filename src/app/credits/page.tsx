@@ -1,4 +1,4 @@
-import { Check, Leaf, Sprout, Trees } from "lucide-react";
+import { Check, Leaf, type LucideProps, Sprout, Trees } from "lucide-react";
 import {
 	Card,
 	CardContent,
@@ -8,10 +8,21 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import type { PLANS } from "@prisma/client";
 
-const plans = [
+type Plan = {
+	name: string;
+	type: PLANS;
+	icon: React.FC<LucideProps>;
+	credits: number;
+	price: number;
+	features: string[];
+};
+
+const plans: Plan[] = [
 	{
 		name: "Seedling",
+		type: "BASIC",
 		icon: Sprout,
 		credits: 50,
 		price: 4.99,
@@ -23,6 +34,7 @@ const plans = [
 	},
 	{
 		name: "Blooming",
+		type: "MEDIUM",
 		icon: Leaf,
 		credits: 200,
 		price: 14.99,
@@ -35,6 +47,7 @@ const plans = [
 	},
 	{
 		name: "Forest",
+		type: "PRO",
 		icon: Trees,
 		credits: 500,
 		price: 29.99,
@@ -97,9 +110,20 @@ const PlanCard = ({ plan }: { plan: (typeof plans)[number] }) => {
 				</ul>
 			</CardContent>
 			<CardFooter>
-				<Button className="w-full bg-green-600 hover:bg-green-700 text-white">
-					Choose Plan
-				</Button>
+				<form
+					action={async () => {
+						"use server";
+						const fd = new FormData();
+						fd.append("plan", plan.type);
+					}}
+				>
+					<Button
+						className="w-full bg-green-600 hover:bg-green-700 text-white"
+						type="submit"
+					>
+						Choose Plan
+					</Button>
+				</form>
 			</CardFooter>
 		</Card>
 	);

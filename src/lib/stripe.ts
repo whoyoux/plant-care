@@ -2,7 +2,7 @@ import "server-only";
 
 import Stripe from "stripe";
 
-const key = process.env.STRIPE_SECRET_KEY;
+const key = process.env.STRIPE_SECRET;
 if (!key) {
 	throw new Error("Missing Stripe secret key");
 }
