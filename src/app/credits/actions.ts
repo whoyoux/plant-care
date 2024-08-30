@@ -2,8 +2,8 @@
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { stripe } from "@/lib/stripe";
-import { getBaseUrl, getPriceIDFromPlan } from "@/lib/utils";
+import { getPriceIDFromPlan, stripe } from "@/lib/stripe";
+import { getBaseUrl } from "@/lib/utils";
 import { PLANS } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -20,9 +20,11 @@ type CheckoutResponse =
 export async function goToCheckout(
 	formData: FormData,
 ): Promise<CheckoutResponse> {
+	console.log("formData", formData.get("plan"));
 	const plan = plansSchema.safeParse(formData.get("plan"));
 
 	if (!plan.success) {
+		console.log("Validation error");
 		return {
 			success: false,
 			message: "Invalid plan",
@@ -31,7 +33,7 @@ export async function goToCheckout(
 
 	const session = await auth();
 
-	if (!session?.user?.id) {
+	if (!session?.user?.id || !session?.user?.email) {
 		return {
 			success: false,
 			message: "You must be logged in to checkout",
@@ -54,6 +56,7 @@ export async function goToCheckout(
 		cancel_url: `${getBaseUrl()}/`,
 		payment_method_types: ["card"],
 		mode: "payment",
+		customer_email: session.user.email,
 		line_items: [
 			{
 				price: getPriceIDFromPlan(plan.data),

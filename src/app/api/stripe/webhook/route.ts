@@ -1,10 +1,9 @@
 import type Stripe from "stripe";
 import type { NextRequest } from "next/server";
 import { headers } from "next/headers";
-import { stripe } from "@/lib/stripe";
+import { getCreditsFromPlan, stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
 import type { PLANS } from "@prisma/client";
-import { getCreditsFromPlan } from "@/lib/utils";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
 

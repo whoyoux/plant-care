@@ -223,7 +223,7 @@ const SignOut = ({ children }: { children: React.ReactNode }) => {
 	);
 };
 
-const SignInButton = () => {
+export const SignInButton = () => {
 	return (
 		<form
 			action={async () => {

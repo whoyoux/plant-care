@@ -9,6 +9,10 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { PLANS } from "@prisma/client";
+import { goToCheckout } from "./actions";
+import { toast } from "sonner";
+import { auth } from "@/lib/auth";
+import { SignInButton } from "@/components/header";
 
 type Plan = {
 	name: string;
@@ -62,6 +66,8 @@ const plans: Plan[] = [
 ];
 
 export default async function CreditsPage() {
+	const session = await auth();
+
 	return (
 		<div className="container mt-10">
 			<div className="flex flex-col items-center gap-4">
@@ -74,14 +80,17 @@ export default async function CreditsPage() {
 			</div>
 			<div className="flex flex-col lg:flex-row  gap-4">
 				{plans.map((plan) => (
-					<PlanCard key={plan.name} plan={plan} />
+					<PlanCard key={plan.name} plan={plan} isLoggedIn={!!session?.user} />
 				))}
 			</div>
 		</div>
 	);
 }
 
-const PlanCard = ({ plan }: { plan: (typeof plans)[number] }) => {
+const PlanCard = ({
+	plan,
+	isLoggedIn,
+}: { plan: (typeof plans)[number]; isLoggedIn: boolean }) => {
 	return (
 		<Card key={plan.name} className="flex flex-col flex-1">
 			<CardHeader>
@@ -110,20 +119,32 @@ const PlanCard = ({ plan }: { plan: (typeof plans)[number] }) => {
 				</ul>
 			</CardContent>
 			<CardFooter>
-				<form
-					action={async () => {
-						"use server";
-						const fd = new FormData();
-						fd.append("plan", plan.type);
-					}}
-				>
-					<Button
-						className="w-full bg-green-600 hover:bg-green-700 text-white"
-						type="submit"
-					>
-						Choose Plan
-					</Button>
-				</form>
+				{isLoggedIn ? (
+					<>
+						<form
+							action={async () => {
+								"use server";
+								const fd = new FormData();
+								fd.append("plan", plan.type);
+								const result = await goToCheckout(fd);
+								if (!result.success) {
+									toast.error(result.message);
+								}
+							}}
+						>
+							<Button
+								className="w-full bg-green-600 hover:bg-green-700 text-white"
+								type="submit"
+							>
+								Choose Plan
+							</Button>
+						</form>
+					</>
+				) : (
+					<>
+						<SignInButton />
+					</>
+				)}
 			</CardFooter>
 		</Card>
 	);
