@@ -69,6 +69,14 @@ export const uploadPhotoAndIdentifyPlantAction = authAction
 						scientificName: aiResult.scientificName,
 						carePlan: aiResult.carePlan,
 						errorMessage: aiResult.errorMessage,
+						watering: aiResult.plan.watering,
+						light: aiResult.plan.light,
+						soil: aiResult.plan.soil,
+						temperature: aiResult.plan.temperature,
+						humidity: aiResult.plan.humidity,
+						fertilization: aiResult.plan.fertilization,
+						repotting: aiResult.plan.repotting,
+						other: aiResult.plan.other,
 						user: {
 							connect: {
 								id: session.user.id,

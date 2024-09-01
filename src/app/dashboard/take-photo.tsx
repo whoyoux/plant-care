@@ -62,6 +62,7 @@ const TakePhoto = () => {
 				{photo && <img src={photo} alt="plant" />}
 				<Camera
 					ref={cameraRef}
+					facingMode="environment"
 					aspectRatio={1}
 					numberOfCamerasCallback={setNumberOfCameras}
 					errorMessages={{

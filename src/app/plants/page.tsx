@@ -69,7 +69,9 @@ const PlantCard = ({
 }: PlantCardProps) => {
 	return (
 		<div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 items-center border p-8 bg-card">
-			<Image src={imageFile.url} alt="" width={200} height={200} />
+			<div className="w-full min-w-[200px] relative aspect-video">
+				<Image src={imageFile.url} alt="" fill />
+			</div>
 			<div className="flex flex-col gap-2">
 				<Link href={`/plants/${id}`}>
 					<h2
@@ -81,12 +83,17 @@ const PlantCard = ({
 						{isFound ? name : "Plant not recognized"}
 					</h2>
 				</Link>
-				<h3 className="text-lg font-medium text-muted-foreground">
-					{scientificName}
-				</h3>
 				<p className="text-sm text-muted-foreground">
 					{isFound ? description : errorMessage}
 				</p>
+				<div className="flex justify-end mt-2">
+					<Link
+						href={`/plants/${id}`}
+						className={cn(buttonVariants({ variant: "default" }))}
+					>
+						See more
+					</Link>
+				</div>
 			</div>
 		</div>
 	);

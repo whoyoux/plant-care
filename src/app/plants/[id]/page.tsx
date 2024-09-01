@@ -1,6 +1,17 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { ArrowLeft } from "lucide-react";
+import {
+	ArrowLeft,
+	Check,
+	Cylinder,
+	Droplet,
+	Leaf,
+	MoreHorizontal,
+	Sprout,
+	Sun,
+	ThermometerSun,
+	Wind,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -63,12 +74,12 @@ const PlantPage = async ({ params: { id } }: { params: { id: string } }) => {
 				</Link>
 			</div>
 			<div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-8">
-				<div className="w-full sm:w-auto">
+				<div className="w-full sm:w-auto relative aspect-video min-w-[200px] md:max-w-[320px] flex-1">
 					<Image
 						src={plant.imageFile.url}
 						alt=""
-						width={200}
-						height={200}
+						fill
+						priority
 						className="w-full sm:w-[200px] h-auto object-cover rounded-lg"
 					/>
 				</div>
@@ -80,15 +91,36 @@ const PlantPage = async ({ params: { id } }: { params: { id: string } }) => {
 					<p className="text-sm text-muted-foreground">{plant.description}</p>
 				</div>
 			</div>
-			<div>
-				<ul className="list list-inside space-y-2 sm:space-y-3">
-					{plant.carePlan.map((step) => (
-						<li
-							key={step}
-							className="text-sm sm:text-base text-foreground pl-2 leading-relaxed"
-						>
-							<span className="text-primary text-base sm:text-lg">&bull;</span>{" "}
-							{step}
+			<div className="mt-4">
+				<ul className="list list-inside flex flex-col gap-6">
+					{[
+						{ label: "Watering", value: plant.watering, Icon: Droplet },
+						{ label: "Light", value: plant.light, Icon: Sun },
+						{ label: "Soil", value: plant.soil, Icon: Leaf },
+						{
+							label: "Temperature",
+							value: plant.temperature,
+							Icon: ThermometerSun,
+						},
+						{ label: "Humidity", value: plant.humidity, Icon: Wind },
+						{
+							label: "Fertilization",
+							value: plant.fertilization,
+							Icon: Sprout,
+						},
+						{ label: "Repotting", value: plant.repotting, Icon: Cylinder },
+						{ label: "Other", value: plant.other, Icon: MoreHorizontal },
+					].map((step) => (
+						<li key={step.label} className="text-sm sm:text-base">
+							<div className="flex items-center gap-2">
+								<div className="aspect-square w-10 h-10 rounded-full bg-primary/10 grid place-items-center">
+									<step.Icon className="text-primary text-base sm:text-lg inline-block" />
+								</div>
+								<strong>{step.label}</strong>
+							</div>
+							<p className="text-muted-foreground mt-2 leading-relaxed">
+								{step.value}
+							</p>
 						</li>
 					))}
 				</ul>

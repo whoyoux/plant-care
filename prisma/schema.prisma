@@ -100,7 +100,17 @@ model ImageResult {
   scientificName String   @default(" ") @map("scientific_name")
   description    String
   carePlan       String[] @map("care_plan")
-  errorMessage   String?  @map("error_message")
+
+  watering      String @map("watering")
+  light         String @map("light")
+  soil          String @map("soil")
+  temperature   String @map("temperature")
+  humidity      String @map("humidity")
+  fertilization String @map("fertilization")
+  repotting     String @map("repotting")
+  other         String @map("other")
+
+  errorMessage String? @map("error_message")
 
   imageFile   ImageFile @relation(fields: [imageFileId], references: [id])
   imageFileId String    @unique

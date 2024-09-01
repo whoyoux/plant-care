@@ -15,6 +15,16 @@ export const findPlant = async (imageUrl: string) => {
 			description: z.string(),
 			carePlan: z.array(z.string()),
 			errorMessage: z.string().optional(),
+			plan: z.object({
+				watering: z.string(),
+				light: z.string(),
+				soil: z.string(),
+				temperature: z.string(),
+				humidity: z.string(),
+				fertilization: z.string(),
+				repotting: z.string(),
+				other: z.string(),
+			}),
 		}),
 		messages: [
 			{
@@ -37,8 +47,6 @@ export const findPlant = async (imageUrl: string) => {
 			},
 		],
 	});
-
-	console.log("USAGE: ", usage);
 
 	return object;
 };
