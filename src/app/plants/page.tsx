@@ -68,11 +68,11 @@ const PlantCard = ({
 	id,
 }: PlantCardProps) => {
 	return (
-		<div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 items-center border p-8 bg-card">
-			<div className="w-full min-w-[200px] relative aspect-video">
-				<Image src={imageFile.url} alt="" fill />
+		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:items-start gap-4 md:gap-8 items-center border p-8 bg-card">
+			<div className="w-full min-w-[200px] relative aspect-video col-span-1">
+				<Image src={imageFile.url} alt="" fill className="object-cover" />
 			</div>
-			<div className="flex flex-col gap-2">
+			<div className="flex flex-col gap-2 col-span-1 md:col-span-1 lg:col-span-2">
 				<Link href={`/plants/${id}`}>
 					<h2
 						className={cn(

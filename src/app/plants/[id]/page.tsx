@@ -52,7 +52,13 @@ const PlantPage = async ({ params: { id } }: { params: { id: string } }) => {
 				</div>
 				<div className="w-full flex flex-row gap-8">
 					<div>
-						<Image src={plant.imageFile.url} alt="" width={200} height={200} />
+						<Image
+							src={plant.imageFile.url}
+							alt=""
+							width={200}
+							height={200}
+							className="object-cover"
+						/>
 					</div>
 					<div className="flex-1 flex flex-col gap-4">
 						<h2 className="text-2xl font-semibold">Plant not found</h2>
@@ -80,7 +86,7 @@ const PlantPage = async ({ params: { id } }: { params: { id: string } }) => {
 						alt=""
 						fill
 						priority
-						className="w-full sm:w-[200px] h-auto object-cover rounded-lg"
+						className="w-full sm:w-[200px] h-auto rounded-lg object-cover"
 					/>
 				</div>
 				<div className="flex-1 flex flex-col gap-2 sm:gap-4">
